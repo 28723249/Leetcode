@@ -11,7 +11,9 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 /**
- * Leetcode 测试类
+ * 2. 两数相加
+ *
+ * https://leetcode-cn.com/problems/add-two-numbers/
  */
 @TestInstance(Lifecycle.PER_CLASS)
 public class Lc2Test {
@@ -60,9 +62,6 @@ public class Lc2Test {
         return head;
     }
 
-    /**
-     *  两数相加
-     */
     ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if (null == l1) {
             return l2;
