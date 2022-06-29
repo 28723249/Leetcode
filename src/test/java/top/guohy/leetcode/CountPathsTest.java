@@ -25,9 +25,9 @@ public class CountPathsTest {
     @Test
     void testCountPaths() {
         for (int i = 0; i < 10; ++i) {
-            int l = RandomUtils.nextInt(1, 10);
-            int m = RandomUtils.nextInt(5, 9);
-            int n = RandomUtils.nextInt(5, 9);
+            int l = RandomUtils.nextInt(5, 10);
+            int m = RandomUtils.nextInt(5, 10);
+            int n = RandomUtils.nextInt(5, 10);
             System.out.printf("%s: (%d, %d, %d)\n", LocalDateTime.now(), l, m, n);
 
             long t1 = System.currentTimeMillis();
