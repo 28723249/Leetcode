@@ -9,9 +9,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 /**
- * 3. 无重复字符的最长子串
- *
- * https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+ * <a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串</a>
  */
 @TestInstance(Lifecycle.PER_CLASS)
 public class Lc3Test {

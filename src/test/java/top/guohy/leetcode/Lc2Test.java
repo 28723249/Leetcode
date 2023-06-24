@@ -11,9 +11,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 /**
- * 2. 两数相加
- *
- * https://leetcode-cn.com/problems/add-two-numbers/
+ * <a href="https://leetcode-cn.com/problems/add-two-numbers/">2. 两数相加</a>
  */
 @TestInstance(Lifecycle.PER_CLASS)
 public class Lc2Test {
