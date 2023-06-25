@@ -34,7 +34,7 @@ public class Lc3Test {
         int size = length < 3 ? length + 1 : (int) ((float) length / 0.75f + 1.0f);
         Map<Character, Integer> map = new HashMap<>(size);
 
-        int maxLen = 0, maxBegin = 0;
+        int maxLen = 0;
         int begin, end;
         for (begin = end = 0; end < length; ++end) {
             final char ch = s.charAt(end);
@@ -46,7 +46,6 @@ public class Lc3Test {
                 // 记录当前最长子串的长度和开始位置
                 if (maxLen < len) {
                     maxLen = len;
-                    maxBegin = begin;
                 }
 
                 for (int i = begin; i < idx; ++i) {
@@ -67,7 +66,6 @@ public class Lc3Test {
         // 记录当前最长子串的长度和开始位置
         if (maxLen < len) {
             maxLen = len;
-            maxBegin = begin;
         }
 
         return maxLen;
