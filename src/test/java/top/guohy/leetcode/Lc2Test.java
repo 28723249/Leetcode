@@ -31,7 +31,7 @@ public class Lc2Test {
 
         assertTrue(null == p1 && null == p2);
 
-        System.out.println(String.format("n1 = %d, n2 = %d, result = %d", n1, n2, n1 + n2));
+        System.out.printf("n1 = %d, n2 = %d, result = %d%n", n1, n2, n1 + n2);
     }
 
     private ListNode toListNode(int n) {
@@ -122,17 +122,10 @@ public class Lc2Test {
         int val;
         ListNode next;
 
-        ListNode() {
-        }
-
         ListNode(int val) {
             this.val = val;
         }
 
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
     }
 
 }
