@@ -1,14 +1,10 @@
 package top.guohy.leetcode;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
@@ -22,7 +18,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 public class Lc2418Test {
 
     @Test
-    void testSortByScore() {
+    void test() {
         // 获取英文名字集合
         Set<String> nameSet = new HashSet<>(1500);
         String path = this.getClass().getClassLoader().getResource("names.txt").getPath();
