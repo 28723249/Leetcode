@@ -25,9 +25,9 @@ public class CountPathsTest {
     @Test
     void test() {
         for (int i = 0; i < 10; ++i) {
-            int l = RandomUtils.nextInt(5, 10);
-            int m = RandomUtils.nextInt(5, 10);
-            int n = RandomUtils.nextInt(5, 10);
+            int l = RandomUtils.nextInt(5, 11);
+            int m = RandomUtils.nextInt(5, 11);
+            int n = RandomUtils.nextInt(5, 11);
             System.out.printf("%s: (%d, %d, %d)\n", LocalDateTime.now(), l, m, n);
 
             long t0 = System.nanoTime();
@@ -41,7 +41,7 @@ public class CountPathsTest {
             System.out.printf("\tcountPathsDp:          %d ns, num2 = %d\n", t1 - t0, num2);
 
             t0 = System.nanoTime();
-            long num3 = countPathsRecursively(m, n, l);
+            long num3 = countPathsRecursively(n, l, m);
             t1 = System.nanoTime();
             System.out.printf("\tcountPathsRecursively: %d ns, num3 = %d\n", t1 - t0, num3);
 
