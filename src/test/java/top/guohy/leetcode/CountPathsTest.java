@@ -3,9 +3,6 @@ package top.guohy.leetcode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -33,20 +30,20 @@ public class CountPathsTest {
             int n = RandomUtils.nextInt(5, 10);
             System.out.printf("%s: (%d, %d, %d)\n", LocalDateTime.now(), l, m, n);
 
-            long t0 = System.currentTimeMillis();
+            long t0 = System.nanoTime();
             long num1 = countPaths(l, m, n);
-            long t1 = System.currentTimeMillis();
-            System.out.printf("\tcountPaths:            %d ms, num1 = %d\n", t0 - t1, num1);
+            long t1 = System.nanoTime();
+            System.out.printf("\tcountPaths:            %d ns, num1 = %d\n", t1 - t0, num1);
 
-            t0 = System.currentTimeMillis();
+            t0 = System.nanoTime();
             long num2 = countPathsDp(m, n, l);
-            t1 = System.currentTimeMillis();
-            System.out.printf("\tcountPathsDp:          %d ms, num2 = %d\n", t0 - t1, num2);
+            t1 = System.nanoTime();
+            System.out.printf("\tcountPathsDp:          %d ns, num2 = %d\n", t1 - t0, num2);
 
-            t0 = System.currentTimeMillis();
+            t0 = System.nanoTime();
             long num3 = countPathsRecursively(m, n, l);
-            t1 = System.currentTimeMillis();
-            System.out.printf("\tcountPathsRecursively: %d ms, num3 = %d\n", t0 - t1, num3);
+            t1 = System.nanoTime();
+            System.out.printf("\tcountPathsRecursively: %d ns, num3 = %d\n", t1 - t0, num3);
 
             assertEquals(num1, num2);
             assertEquals(num1, num3);
@@ -102,6 +99,67 @@ public class CountPathsTest {
     }
 
     /**
+     * 动态规划所有可行路径的数量
+     *
+     * @author guoguanfei
+     * @date 23.6.30 22:28
+     *
+     * @param x 目标点的 X 坐标
+     * @param y 目标点的 Y 坐标
+     * @param z 目标点的 Z 坐标
+     * @return 可行路径的数量
+     */
+    long countPathsDp(int x, int y, int z) {
+        // 初始化
+        long[][][] values = new long[x + 1][y + 1][z + 1];
+        for (int i = 0; i < x + 1; ++i) {
+            values[i] = new long[y + 1][z + 1];
+            for (int j = 0; j < y + 1; ++j) {
+                values[i][j] = new long[z + 1];
+            }
+        }
+
+        // 计算坐标轴上目标点的总路径数
+        for (int i = 0; i < x + 1; ++i) {
+            values[i][0][0] = 1;
+        }
+        for (int i = 0; i < y + 1; ++i) {
+            values[0][i][0] = 1;
+        }
+        for (int i = 0; i < z + 1; ++i) {
+            values[0][0][i] = 1;
+        }
+
+        // 计算坐标平面上目标点的的总路径数
+        for (int i = 1; i < x + 1; ++i) {
+            for (int j = 1; j < y + 1; ++j) {
+                values[i][j][0] = values[i - 1][j][0] + values[i][j - 1][0];
+            }
+        }
+        for (int i = 1; i < x + 1; ++i) {
+            for (int k = 1; k < z + 1; ++k) {
+                values[i][0][k] = values[i - 1][0][k] + values[i][0][k - 1];
+            }
+        }
+        for (int j = 1; j < y + 1; ++j) {
+            for (int k = 1; k < z + 1; ++k) {
+                values[0][j][k] = values[0][j - 1][k] + values[0][j][k - 1];
+            }
+        }
+
+        // 计算其他目标点的总路径数
+        for (int i = 1; i < x + 1; ++i) {
+            for (int j = 1; j < y + 1; ++j) {
+                for (int k = 1; k < z + 1; ++k) {
+                    values[i][j][k] = values[i - 1][j][k] + values[i][j - 1][k] + values[i][j][k - 1];
+                }
+            }
+        }
+
+        return values[x][y][z];
+    }
+
+    /**
      * 递归计算所有可行路径的数量
      *
      * @author guoguanfei
@@ -136,55 +194,6 @@ public class CountPathsTest {
 
         return countPathsRecursively(x - 1, y, z) + countPathsRecursively(x, y - 1, z)
             + countPathsRecursively(x, y, z - 1);
-    }
-
-    private Map<RowKey, Long> memo = new HashMap<>(1 << 20);
-
-    long countPathsDp(int x, int y, int z) {
-        // 目标点在坐标轴上，直接返回1
-        if (0 == x && (0 == y || 0 == z)) {
-            return 1;
-        }
-
-        if (0 == y && 0 == z) {
-            return 1;
-        }
-
-        int x1 = Math.max(x - 1, 0);
-        int y1 = Math.max(y - 1, 0);
-        int z1 = Math.max(z - 1, 0);
-        return memo.computeIfAbsent(new RowKey(x1, y, z), k -> countPathsDp(x1, y, z))
-            + memo.computeIfAbsent(new RowKey(x, y1, z), k -> countPathsDp(x, y1, z))
-            + memo.computeIfAbsent(new RowKey(x, y, z1), k -> countPathsDp(x, y, z1));
-    }
-
-    private static class RowKey {
-
-        private int[] key;
-
-        RowKey(int x, int y, int z) {
-            key = new int[]{x, y, z};
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            RowKey rowKey = (RowKey) o;
-            return Arrays.equals(key, rowKey.key);
-        }
-
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(key);
-        }
-
     }
 
 }
